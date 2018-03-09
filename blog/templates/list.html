@@ -1,0 +1,12 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>lista</title>
+</head>
+<body>
+	{% for posts in Post %}
+	<h3>titulo: {{posts.title}}, contenido: {{ posts.content}}, url: {{posts.link_url}}</h3>
+	{% endfor %}
+</body>
+</html>
