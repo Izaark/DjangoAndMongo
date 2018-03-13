@@ -9,6 +9,8 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 
 #Connect to MongoDB
+# SESSION_ENGINE = 'mongoengine.django.sessions'
+
 DBNAME = os.environ.get('WOKE_BLOG_DB_NAME')
 _MONGODB_USER = os.environ.get('WOKE_BLOG_DB_USER')
 _MONGODB_PASSWD = os.environ.get('WOKE_BLOG_DB_PASSWORD')
@@ -20,6 +22,9 @@ _MONGODB_DATABASE_HOST = \
 
 mongoengine.connect(DBNAME, host=_MONGODB_DATABASE_HOST)
 
+# AUTHENTICATION_BACKENDS = (
+#     'mongoengine.django.auth.MongoEngineBackend',
+# )
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/2.0/howto/deployment/checklist/
 
@@ -42,6 +47,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_mongoengine'
 ]
 
 MIDDLEWARE = [
@@ -76,16 +83,25 @@ WSGI_APPLICATION = 'blog.wsgi.application'
 
 
 # Database
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
+MONGODB_DATABASES = {
+    "default": {
+        "name": DBNAME,
+        "host": os.environ.get('WOKE_BLOG_DB_HOST'),
+        "password": os.environ.get('WOKE_BLOG_DB_PASSWORD'),
+        "username": os.environ.get('WOKE_BLOG_DB_USER'),
+        "tz_aware": True, # if you using timezones in django (USE_TZ = True)
+    },
+}
+
 # https://docs.djangoproject.com/en/2.0/ref/settings/#databases
 
 
-
-DATABASES = {
-    'default': {
-        'ENGINE': '',
-        'NAME': '',
-    }
-}
 
 
 
