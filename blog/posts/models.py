@@ -7,7 +7,7 @@ connect(DBNAME)
 class Comment(EmbeddedDocument):
 	content = StringField()
 	name = StringField(max_length=120)
-	
+
 class Post(Document):
 	# _id = StringField()
 	title = StringField(max_length=120, required=True)
@@ -36,3 +36,15 @@ class ImagePost(Post2):
 
 class LinkPost(Post2):
 	link_url = StringField()
+
+class UserPost(Document):
+	title = StringField(max_length=50, required=True)
+	author = ReferenceField(User, reverse_delete_rule=CASCADE)
+
+class PostReview(Document):
+	content = StringField(max_length=50, required=True)
+	post = ReferenceField(UserPost, reverse_delete_rule=CASCADE)
+
+	class Meta:
+		verbose_name = 'PostReview'
+		verbose_name_plural = 'PostReviews'
